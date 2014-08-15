@@ -15,10 +15,12 @@
   (:unix (:or "libssl.so.1.0.0" "libssl.so"))
   (t (:default "libssl3")))
 
-(cffi:define-foreign-library libcrypto
-  (:darwin "libcrypto.dylib")
-  (:unix (:or "libcrypto.so.1.0.0" "libcrypto.so"))
-  (t (:default "libcrypto")))
+; leave this off for now - not sure if it's needed.
+; There are a few more places with libcrypto further down.
+;(cffi:define-foreign-library libcrypto
+;  (:darwin "libcrypto.dylib")
+;  (:unix (:or "libcrypto.so.1.0.0" "libcrypto.so"))
+;  (t (:default "libcrypto")))
 
 (cffi:define-foreign-library libeay32
   (:windows "libeay32.dll"))
@@ -65,7 +67,7 @@
   (load-foreign-library 'libssl)
   (load-foreign-library 'libeay32)
   ;; libcrypto merged into libssl for recent OpenSSL versions.
-  (ignore-errors (load-foreign-library 'libcrypto))
+  ;(ignore-errors (load-foreign-library 'libcrypto))
   (open-ssl-add-all-algorithms))
 
 ;; look at add-startup-function in truledger, maybe we need something similar
